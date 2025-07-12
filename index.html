@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Ratio Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c1810 0%, #4a3429 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c1810;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .coffee-icon {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .calc-section {
+            background: #f8f6f3;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 2px solid #e0d5c7;
+            transition: all 0.3s ease;
+        }
+
+        .calc-section:hover {
+            border-color: #8b4513;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.2);
+        }
+
+        .calc-section h3 {
+            color: #8b4513;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #2c1810;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0d5c7;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #8b4513;
+        }
+
+        .calculate-btn {
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(45deg, #a0522d, #8b4513);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.3);
+        }
+
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            border: 2px solid #8b4513;
+            font-weight: 600;
+            color: #2c1810;
+            text-align: center;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result.empty {
+            border: 2px dashed #e0d5c7;
+            color: #999;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .input-field {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="coffee-icon">☕</div>
+        <h1>Coffee Ratio Calculator</h1>
+        
+        <!-- Calculate Ratio from Coffee and Water -->
+        <div class="calc-section">
+            <h3>Calculate Ratio from Coffee & Water</h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="coffee1">Coffee (grams)</label>
+                    <input type="number" id="coffee1" placeholder="e.g., 20" step="0.1">
+                </div>
+                <div class="input-field">
+                    <label for="water1">Water (grams)</label>
+                    <input type="number" id="water1" placeholder="e.g., 300" step="0.1">
+                </div>
+            </div>
+            <button class="calculate-btn" onclick="calculateRatio()">Calculate Ratio</button>
+            <div id="result1" class="result empty">Enter coffee and water amounts</div>
+        </div>
+
+        <!-- Calculate Water from Coffee and Ratio -->
+        <div class="calc-section">
+            <h3>Calculate Water from Coffee & Ratio</h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="coffee2">Coffee (grams)</label>
+                    <input type="number" id="coffee2" placeholder="e.g., 20" step="0.1">
+                </div>
+                <div class="input-field">
+                    <label for="ratio2">Desired Ratio (1:X)</label>
+                    <input type="number" id="ratio2" placeholder="e.g., 15" step="0.1">
+                </div>
+            </div>
+            <button class="calculate-btn" onclick="calculateWater()">Calculate Water</button>
+            <div id="result2" class="result empty">Enter coffee amount and desired ratio</div>
+        </div>
+
+        <!-- Calculate Coffee from Water and Ratio -->
+        <div class="calc-section">
+            <h3>Calculate Coffee from Water & Ratio</h3>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="water3">Water (grams)</label>
+                    <input type="number" id="water3" placeholder="e.g., 300" step="0.1">
+                </div>
+                <div class="input-field">
+                    <label for="ratio3">Desired Ratio (1:X)</label>
+                    <input type="number" id="ratio3" placeholder="e.g., 15" step="0.1">
+                </div>
+            </div>
+            <button class="calculate-btn" onclick="calculateCoffee()">Calculate Coffee</button>
+            <div id="result3" class="result empty">Enter water amount and desired ratio</div>
+        </div>
+
+        <div class="footer">
+            Perfect coffee, every time ☕
+        </div>
+    </div>
+
+    <script>
+        function calculateRatio() {
+            const coffee = parseFloat(document.getElementById('coffee1').value);
+            const water = parseFloat(document.getElementById('water1').value);
+            const result = document.getElementById('result1');
+
+            if (isNaN(coffee) || isNaN(water) || coffee <= 0 || water <= 0) {
+                result.className = 'result empty';
+                result.textContent = 'Please enter valid positive numbers';
+                return;
+            }
+
+            const ratio = water / coffee;
+            result.className = 'result';
+            result.textContent = `Ratio: 1:${ratio.toFixed(2)}`;
+        }
+
+        function calculateWater() {
+            const coffee = parseFloat(document.getElementById('coffee2').value);
+            const ratio = parseFloat(document.getElementById('ratio2').value);
+            const result = document.getElementById('result2');
+
+            if (isNaN(coffee) || isNaN(ratio) || coffee <= 0 || ratio <= 0) {
+                result.className = 'result empty';
+                result.textContent = 'Please enter valid positive numbers';
+                return;
+            }
+
+            const water = coffee * ratio;
+            result.className = 'result';
+            result.textContent = `Water needed: ${water.toFixed(1)}g`;
+        }
+
+        function calculateCoffee() {
+            const water = parseFloat(document.getElementById('water3').value);
+            const ratio = parseFloat(document.getElementById('ratio3').value);
+            const result = document.getElementById('result3');
+
+            if (isNaN(water) || isNaN(ratio) || water <= 0 || ratio <= 0) {
+                result.className = 'result empty';
+                result.textContent = 'Please enter valid positive numbers';
+                return;
+            }
+
+            const coffee = water / ratio;
+            result.className = 'result';
+            result.textContent = `Coffee needed: ${coffee.toFixed(1)}g`;
+        }
+
+        // Add Enter key support for inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        const section = this.closest('.calc-section');
+                        const button = section.querySelector('.calculate-btn');
+                        button.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
